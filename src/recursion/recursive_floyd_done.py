@@ -1,12 +1,18 @@
 from sys import maxsize
-
 NO_PATH = maxsize
 NO_PATH_MARKER = "No Path"
+GRAPH = [
+    [0, 7, NO_PATH, 8],
+    [NO_PATH, 0, 5, NO_PATH],
+    [NO_PATH, NO_PATH, 0, 2],
+    [NO_PATH, NO_PATH, NO_PATH, 0]
+]
 
+v=len(GRAPH)
 
-def FW(graph):
-    v = len(graph)
-    dist = [row[:] for row in graph]  # Create a deep copy of the graph
+def FW():
+
+    dist = [row[:] for row in GRAPH]  # Create a deep copy of the graph
 
     # Recursive function to compute shortest paths
     def RE(i, j, k):
@@ -35,17 +41,14 @@ def print_out_graph(graph):
             message = "Distance from Node %s to Node %s is %s" % (i, j, distance)
             print(message)
 
-
-if __name__ == "__main__":
-    GRAPH = [
-        [0, 7, NO_PATH, 8],
-        [NO_PATH, 0, 5, NO_PATH],
-        [NO_PATH, NO_PATH, 0, 2],
-        [NO_PATH, NO_PATH, NO_PATH, 0]
-    ]
-
-    result_graph = FW(GRAPH)
+def FWmain():
+    result_graph = FW()
     print_out_graph(result_graph)
+if __name__ == "__main__":
+    FWmain()
+
+    #result_graph = FW()
+    #print_out_graph(result_graph)
     # Provided graph for testing
 
 
