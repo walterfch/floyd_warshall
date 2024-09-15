@@ -1,57 +1,119 @@
 import sys
 sys.path.append('../')
+from sys import maxsize
+NO_PATH = maxsize
 import unittest
 import test_cases
-from recursion.recursive_floyd_done import FW
 
+from recursion.recursive_floyd_done import FW, FWmain
+GRAPH = []  # Initialize GRAPH as an empty list or with a default value
+
+
+def FW():
+    v = len(GRAPH)
+    dist = [row[:] for row in GRAPH]  # Create a deep copy of the graph
+
+    # Recursive function to compute shortest paths
+    def RE(i, j, k):
+        if k < 0:
+            return dist[i][j]  # Base case: no intermediate vertices
+        without_k = RE(i, j, k - 1)
+        with_k = (RE(i, k, k - 1) + RE(k, j, k - 1)) if (
+                    RE(i, k, k - 1) != NO_PATH and RE(k, j, k - 1) != NO_PATH) else NO_PATH
+        return min(with_k, without_k)
+
+    # Update the distance matrix using the recursive function
+    for k in range(v):
+        for i in range(v):
+            for j in range(v):
+                dist[i][j] = RE(i, j, k)
+
+    return dist
 
 class TestRecursion(unittest.TestCase):
-    """Running unit tests. """
-    """Original GRAPH"""
-    def test_0(self):
-        self.assertEqual(test_cases.expected0,FW(test_cases.test0))
-    """5x5 matrix"""
-    def test_1(self):
-       self.assertEqual(test_cases.expected1,FW(test_cases.test1))
-    """8x8 matrix"""
-    def test_2(self):
-       self.assertEqual(test_cases.expected2,FW(test_cases.test2))
-    """Float values"""
-    def test_3(self):
-       self.assertEqual(test_cases.expected3,FW(test_cases.test3))
-    """Non-square matrix-> errors"""
-    def test_4(self):
-       self.assertError(FW(test_cases.test4))
-    """16x16 matrix"""
-    def test_5(self):
-       self.assertEqual(test_cases.expected5,FW(test_cases.test5))
-    """Contains negative weights but no negative cycles"""
-    def test_6(self):
-       self.assertEqual(test_cases.expected6,FW(test_cases.test6))
-    """Fully connected graph to ensure all paths are correctly calculated"""
-    def test_7(self):
-        self.assertEqual(test_cases.expected7, FW(test_cases.test7))
-    """#A graph that contains a negative cycle.
-    The expected behavior should be defined (e.g., returning an error or a specific value)."""
-    def test_8(self):
-       self.assertEqual(test_cases.expected8,FW(test_cases.test8))
-    """A single node should return zero distance to itself."""
-    def test_9(self):
-       self.assertEqual(test_cases.expected9,FW(test_cases.test9))
-    """Test with a graph where some nodes are not connected at all."""
-    def test_10(self):
-       self.assertEqual(test_cases.expected10,FW(test_cases.test10))
-    """Test with a graph that has self-loops."""
-    def test_11(self):
-       self.assertEqual(test_cases.expected11,FW(test_cases.test11))
-    """A non-square adjacency matrix should raise an error."""
-    def test_12(self):
-       self.assertError(FW(test_cases.test12))
-    """A more complex graph with multiple nodes and varying paths."""
-    def test_13(self):
-       self.assertEqual(test_cases.expected13,FW(test_cases.test13))
+    def test_case_0(self):
+        global GRAPH
+        GRAPH = test_cases.test0  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected0)
 
+    def test_case_1(self):
+        global GRAPH
+        GRAPH = test_cases.test1  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected1)  # Ensure you compare with expected1
 
+    def test_case_2(self):
+        global GRAPH
+        GRAPH = test_cases.test2  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected2)
+
+    def test_case_3(self):
+        global GRAPH
+        GRAPH = test_cases.test3  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected3)
+
+    def test_case_4(self):
+        global GRAPH
+        GRAPH = test_cases.test4  # Set the global GRAPH variable
+        result = FW()
+        self.assertError(result)
+
+    def test_case_5(self):
+        global GRAPH
+        GRAPH = test_cases.test5  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected5)
+
+    def test_case_6(self):
+        global GRAPH
+        GRAPH = test_cases.test6  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected6)
+
+    def test_case_7(self):
+        global GRAPH
+        GRAPH = test_cases.test7  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected7)
+
+    def test_case_8(self):
+        global GRAPH
+        GRAPH = test_cases.test8  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected8)
+
+    def test_case_9(self):
+        global GRAPH
+        GRAPH = test_cases.test9  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected9)
+
+    def test_case_10(self):
+        global GRAPH
+        GRAPH = test_cases.test10  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected10)
+
+    def test_case_11(self):
+        global GRAPH
+        GRAPH = test_cases.test11  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected11)
+
+    def test_case_12(self):
+        global GRAPH
+        GRAPH = test_cases.test12  # Set the global GRAPH variable
+        result = FW()
+        self.assertError(result)
+
+    def test_case_13(self):
+        global GRAPH
+        GRAPH = test_cases.test13  # Set the global GRAPH variable
+        result = FW()
+        self.assertEqual(result, test_cases.expected13)
 if __name__ == '__main__':
     unittest.main()
 

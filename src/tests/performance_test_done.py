@@ -10,6 +10,14 @@ from recursion.recursive_floyd_done import *
 from iterative.iterative_floyd import *
 from time import process_time
 
+GRAPH = [
+    [0, 7, NO_PATH, 8],
+    [NO_PATH, 0, 5, NO_PATH],
+    [NO_PATH, NO_PATH, 0, 2],
+    [NO_PATH, NO_PATH, NO_PATH, 0]
+]
+NO_PATH = maxsize
+NO_PATH_MARKER = "No Path"
 def performance_test(function_handle):
     """
     A function that performs a simple performance test
@@ -25,14 +33,14 @@ def performance_test(function_handle):
     message = "Execution time: {} seconds".format(execution_time)
     print(message)
     
-    def main():
+    def FWmain():
         pass
     
     def iterative_floyd():
         pass
     
 print ("Recursion Test Time")
-performance_test(main)
+performance_test(FWmain)
 
 print ("Iterative Test Time")
 performance_test(iterative_floyd)
